@@ -296,7 +296,7 @@ bool TagDictionary::match(const char* pattern, const char* str)
 
 //------------------------------------------------------------------------------
 
-static int _USERENTRY idCompare(const void *in_p1, const void *in_p2)
+static _USERENTRY idCompare(const void *in_p1, const void *in_p2)
 {
    return *((int *) in_p1) - *((int *) in_p2);
 }

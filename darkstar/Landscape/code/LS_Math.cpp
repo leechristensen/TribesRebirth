@@ -127,9 +127,8 @@ void  LandScape::clr( float _n )
 
 #include <float.h>  // to get float min/max limits
 
-// Already defined in math.h
-//inline float fmin( float x, float y ) { return ( x<y? x:y ); }
-//inline float fmax( float x, float y ) { return ( x>y? x:y ); }
+inline float fmin( float x, float y ) { return ( x<y? x:y ); }
+inline float fmax( float x, float y ) { return ( x>y? x:y ); }
 
 void  LandScape::normalize( float _min, float _max )
 {

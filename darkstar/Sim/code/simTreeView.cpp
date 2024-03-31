@@ -271,7 +271,7 @@ int SimTreeView::handleGetBitmapIndex( SimObject *obj, bool selected )
 
 int SimTreeView::handleGetBitmapIndex( HTREEITEM hItem, bool selected )
 {
-   static bool entry=false;  // treeList has a reentry problem when getting info
+   static entry=false;  // treeList has a reentry problem when getting info
    if ( entry )
       return 0;
 

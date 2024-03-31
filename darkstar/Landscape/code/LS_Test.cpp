@@ -16,15 +16,14 @@
 
 //北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北
 
-/*int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,	LPSTR lpszCmdLine, int nCmdShow )
+int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,	LPSTR lpszCmdLine, int nCmdShow )
 {
    hPrevInstance;
    lpszCmdLine;
    nCmdShow;
 
 	MSG   msg;
-	// Altimor: Unused
-   //bool  notify;
+   bool  notify;
 
 	GWWindow::setHInstance(hInstance);
    LandScape *pLS = new LandScape(256);
@@ -45,5 +44,5 @@
       TranslateMessage(&msg);
       DispatchMessage(&msg);
    }
-}*/
+}
 

@@ -1798,8 +1798,7 @@ ColorF SimTerrain::calcIntensity( const Point3F& pos, const Point3F& normal, boo
             query.box.fMin = pos + context.pos;
             query.box.fMax = end + context.pos;
             query.mask = interiorMask;
-	    // Altimor: Used to have root as the 3rd param, wtf
-            SimContainer * root = findObject( manager, SimRootContainerId, (SimContainer*)(NULL) );
+            SimContainer * root = findObject( manager, SimRootContainerId, root );
             
 
             // do the mission los and the callback if a directional

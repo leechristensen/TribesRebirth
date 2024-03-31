@@ -1,5 +1,3 @@
-; xend is now an intel instruction, so i had to change it to x_end
-
 .486
 .MODEL FLAT, syscall
 
@@ -14,7 +12,7 @@ Point ENDS
 
 PolySurface STRUC
    xstart   dd ?
-   x_end     dd ?
+   xend     dd ?
    myPoly   dd ?
    nextPoly dd ?
 	spanList	dd	?
@@ -28,7 +26,7 @@ PolySurface ENDS
 
 ClippedPolyStore STRUC
    xstart   dd ?
-   x_end     dd ?
+   xend     dd ?
    myPoly   dd ?
    nextPoly dd ?
 ClippedPolyStore ENDS
@@ -319,7 +317,7 @@ gfx_add_edges ENDP
 
 @emitSpan:
    ; registers saved are eax, ebx
-   ; xstart in ecx, x_end in edi
+   ; xstart in ecx, xend in edi
    ; surface ptr in edx
    cmp      ecx, edi
    jge      @emitDone
@@ -472,7 +470,7 @@ gfx_scan_edges PROC C,
    cmp      edx, 0
    je       @@checkSorting
 
-   mov      (PolySurface PTR [edx]).x_end, eax
+   mov      (PolySurface PTR [edx]).xend, eax
 
 @@checkSorting:
    ; edi's current x is in ecx
@@ -527,7 +525,7 @@ gfx_scan_edges PROC C,
 @@noAddLeadSurface:
    cmp      edx, 0
    je       @@insertEdge
-   mov      (PolySurface PTR [edx]).x_end, eax
+   mov      (PolySurface PTR [edx]).xend, eax
 @@insertEdge:
    mov      edx, (PolyEdge PTR [edi]).pprev
    ; nextAdd = addWalk->pnext
@@ -569,7 +567,7 @@ gfx_scan_edges PROC C,
    je       @@nextConstructEdge
    fmul     (PolySurface PTR [ecx]).dwdy
    mov      ebp, (PolySurface PTR [ecx]).xstart
-   mov      esi, (PolySurface PTR [ecx]).x_end
+   mov      esi, (PolySurface PTR [ecx]).xend
    cmp      ebp, esi
    jge      @@nextConstructEdge
    mov      esi, (PolySurface PTR [ecx]).flags
@@ -614,14 +612,14 @@ gfx_scan_edges PROC C,
    mov      transPolyList, 0
 @@transPolyLoop:   
    mov      ecx, (PolySurface PTR [ebx]).xstart
-   mov      edx, (PolySurface PTR [eax]).x_end
+   mov      edx, (PolySurface PTR [eax]).xend
    cmp      ecx, edx
    jge      @@transListProcessed
-   mov      edi, (PolySurface PTR [ebx]).x_end
+   mov      edi, (PolySurface PTR [ebx]).xend
    mov      esi, (PolySurface PTR [eax]).xstart
    cmp      edi, esi
    jg       @@transPolyOverlapped
-   ; emit(transPoly>xstart, transPoly->x_end, transPoly->myPoly)
+   ; emit(transPoly>xstart, transPoly->xend, transPoly->myPoly)
    mov      edx, (PolySurface PTR [ebx]).myPoly
    mov      ebx, (PolySurface PTR [ebx]).nextPoly
    call     @emitSpan
@@ -668,12 +666,12 @@ gfx_scan_edges PROC C,
    fadd     st, st(2)
    ; tp->w  cp->w    tp->curW cp->curW tp->dw   cp->dw   curY
 
-   ; transPoly->x_end-1 in edi
-   ; curPoly->x_end-1 in edx
+   ; transPoly->xend-1 in edi
+   ; curPoly->xend-1 in edx
    cmp      edx, edi
-   jle      @@transx_endDone
+   jle      @@transXEndDone
    mov      edx, edi
-@@transx_endDone:
+@@transXEndDone:
    mov      saveX, edx
    fsubp    st(1), st
 
@@ -722,9 +720,9 @@ gfx_scan_edges PROC C,
    mov      ecx, (PolySurface PTR [ebx]).xstart
    mov      edi, (PolySurface PTR [eax]).xstart
    call     @emitSpan
-   mov      ecx, (PolySurface PTR [eax]).x_end
+   mov      ecx, (PolySurface PTR [eax]).xend
    mov      edi, ebx
-   mov      edx, (PolySurface PTR [ebx]).x_end
+   mov      edx, (PolySurface PTR [ebx]).xend
    mov      ebx, (PolySurface PTR [ebx]).nextPoly
 
    cmp      ecx, edx
@@ -793,8 +791,8 @@ gfx_scan_edges PROC C,
 
 @@transPolyIntersectBehind:
    mov      edx, clipIndex
-   mov      edi, (PolySurface PTR [ebx]).x_end
-   mov      esi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [ebx]).xend
+   mov      esi, (PolySurface PTR [eax]).xend
    mov      ebp, edx
    cmp      edi, esi
    jle      @@transNoExtraSpan
@@ -808,12 +806,12 @@ gfx_scan_edges PROC C,
    ; agi DOH
 
    mov      (PolySurface PTR [ebp]).xstart, esi
-   mov      (PolySurface PTR [ebp]).x_end, edi
+   mov      (PolySurface PTR [ebp]).xend, edi
    mov      (PolySurface PTR [ebp]).myPoly, ecx
    mov      edi, ebp
    call     @insertReverse
 @@transNoExtraSpan:
-   fistp    (PolySurface PTR [ebx]).x_end
+   fistp    (PolySurface PTR [ebx]).xend
    mov      edi, ebx
    mov      ebx, (PolySurface PTR [ebx]).nextPoly
    call     @insertReverse      
@@ -878,7 +876,7 @@ gfx_scan_edges PROC C,
    mov      ebx, (PolySurface PTR [eax]).nextPoly
    cmp      ebx, 0
    je       @@emitLastSpansAndLoop
-   mov      edi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [eax]).xend
    mov      ecx, (PolySurface PTR [ebx]).xstart
    cmp      ecx, edi
    jl       @@spansOverlapInX
@@ -901,7 +899,7 @@ gfx_scan_edges PROC C,
    jnz      @@curPolyTotallyInFront
 
    fild     (PolySurface PTR [ebx]).xstart
-   mov      esi, (PolySurface PTR [ebx]).x_end
+   mov      esi, (PolySurface PTR [ebx]).xend
    cmp      esi, edi
    jl       @@minCalced
    mov      esi, edi
@@ -921,14 +919,14 @@ gfx_scan_edges PROC C,
    fadd     (PolySurface PTR [edx]).curW
    fxch     st(1)
 
-   ; st = x_end nextPolyWStart curPolyWStart y
+   ; st = XEnd nextPolyWStart curPolyWStart y
    fld      st
-   ; st = x_end x_end nextPolyWStart curPolyWStart y
+   ; st = XEnd XEnd nextPolyWStart curPolyWStart y
    fmul     (PolySurface PTR [ecx]).dwdx
-   ; st = curXE x_end nextPolyWStart curPolyWStart y
+   ; st = curXE XEnd nextPolyWStart curPolyWStart y
    fxch     st(2)
    fsubp    st(3), st
-   ; st = x_end curXE startStatus y
+   ; st = XEnd curXE startStatus y
    fmul     (PolySurface PTR [edx]).dwdx
    fxch     st(1)
    fadd     (PolySurface PTR [ecx]).curW
@@ -955,9 +953,9 @@ gfx_scan_edges PROC C,
    jnz      @@testCurPolyBehind
 @@curPolyTotallyInFront:
    ; curPoly is totally in front
-   mov      ecx, (PolySurface PTR [eax]).x_end
+   mov      ecx, (PolySurface PTR [eax]).xend
    mov      edi, (PolySurface PTR [ebx]).nextPoly
-   mov      edx, (PolySurface PTR [ebx]).x_end
+   mov      edx, (PolySurface PTR [ebx]).xend
    mov      (PolySurface PTR [eax]).nextPoly, edi
    cmp      ecx, edx
    jge      @@skipTransClip
@@ -976,9 +974,9 @@ gfx_scan_edges PROC C,
    mov      ecx, (PolySurface PTR [eax]).xstart
    mov      edi, (PolySurface PTR [ebx]).xstart
    call     @emitSpan
-   mov      edi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [eax]).xend
    mov      ecx, ebx
-   mov      esi, (PolySurface PTR [ebx]).x_end
+   mov      esi, (PolySurface PTR [ebx]).xend
    mov      edx, eax
    mov      eax, ebx
    mov      ebx, transPolyList
@@ -995,9 +993,9 @@ gfx_scan_edges PROC C,
    fsub     (PolySurface PTR [ecx]).curW
    fld      (PolySurface PTR [ecx]).dwdx
    fsub     (PolySurface PTR [edx]).dwdx
-   mov      edx, (PolySurface PTR [eax]).x_end
+   mov      edx, (PolySurface PTR [eax]).xend
    mov      ebp, clipIndex
-   mov      edi, (PolySurface PTR [ebx]).x_end
+   mov      edi, (PolySurface PTR [ebx]).xend
    fdivp    st(1), st
 
    test     esi, 080000000h
@@ -1011,15 +1009,15 @@ gfx_scan_edges PROC C,
    lea      esi, [ClipSurfaces + esi*2]
    mov      clipIndex, ebp
    mov      (PolySurface PTR [esi]).xstart, edi
-   mov      (PolySurface PTR [esi]).x_end, edx
+   mov      (PolySurface PTR [esi]).xend, edx
    mov      (PolySurface PTR [esi]).myPoly, ecx
    mov      ecx, eax
    mov      edx, esi
    call     @resort
 @@positiveNoExtraSpan:
-   fistp    (PolySurface PTR [eax]).x_end
+   fistp    (PolySurface PTR [eax]).xend
    mov      esi, (PolySurface PTR [ebx]).nextPoly
-   mov      edi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [eax]).xend
    mov      (PolySurface PTR [eax]).nextPoly, esi
    mov      (PolySurface PTR [ebx]).xstart, edi
    mov      ecx, eax
@@ -1038,7 +1036,7 @@ gfx_scan_edges PROC C,
    mov      clipIndex, ebp
    mov      ecx, (PolySurface PTR [ebx]).myPoly
    mov      (PolySurface PTR [esi]).xstart, edx
-   mov      (PolySurface PTR [esi]).x_end, edi
+   mov      (PolySurface PTR [esi]).xend, edi
    mov      (PolySurface PTR [esi]).myPoly, ecx
    mov      edx, esi
    mov      ecx, ebx
@@ -1052,7 +1050,7 @@ gfx_scan_edges PROC C,
    mov      edx, eax
    mov      edi, (PolySurface PTR [eax]).xstart
    mov      eax, ebx
-   mov      (PolySurface PTR [ebx]).x_end, edi
+   mov      (PolySurface PTR [ebx]).xend, edi
    mov      ecx, ebx
    mov      ebx, transPolyList
    push     OFFSET @@testTransPolyList
@@ -1061,7 +1059,7 @@ gfx_scan_edges PROC C,
    cmp      eax, 0
    je       @@transEndLoopTest
    mov      ecx, (PolySurface PTR [eax]).xstart
-   mov      edi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [eax]).xend
    mov      edx, (PolySurface PTR [eax]).myPoly
    call     @emitSpan
 @@transEndLoopTest:
@@ -1070,7 +1068,7 @@ gfx_scan_edges PROC C,
    je       @@scanlineDone
 @@transEmitLoop:
    mov      ecx, (PolySurface PTR [ebx]).xstart
-   mov      edi, (PolySurface PTR [ebx]).x_end
+   mov      edi, (PolySurface PTR [ebx]).xend
    mov      edx, (PolySurface PTR [ebx]).myPoly
    mov      ebx, (PolySurface PTR [ebx]).nextPoly
    call     @emitSpan
@@ -1197,7 +1195,7 @@ gfx_scan_edges_z PROC C,
    cmp      edx, 0
    je       @@checkSorting
 
-   mov      (PolySurface PTR [edx]).x_end, eax
+   mov      (PolySurface PTR [edx]).xend, eax
 
 @@checkSorting:
    ; edi's current x is in ecx
@@ -1252,7 +1250,7 @@ gfx_scan_edges_z PROC C,
 @@noAddLeadSurface:
    cmp      edx, 0
    je       @@insertEdge
-   mov      (PolySurface PTR [edx]).x_end, eax
+   mov      (PolySurface PTR [edx]).xend, eax
 @@insertEdge:
    mov      edx, (PolyEdge PTR [edi]).pprev
    ; nextAdd = addWalk->pnext
@@ -1294,7 +1292,7 @@ gfx_scan_edges_z PROC C,
    je       @@nextConstructEdge
    fmul     (PolySurface PTR [ecx]).dwdy
    mov      ebp, (PolySurface PTR [ecx]).xstart
-   mov      esi, (PolySurface PTR [ecx]).x_end
+   mov      esi, (PolySurface PTR [ecx]).xend
    cmp      ebp, esi
    jge      @@nextConstructEdge
    mov      esi, (PolySurface PTR [ecx]).flags
@@ -1339,14 +1337,14 @@ gfx_scan_edges_z PROC C,
    mov      transPolyList, 0
 @@transPolyLoop:   
    mov      ecx, (PolySurface PTR [ebx]).xstart
-   mov      edx, (PolySurface PTR [eax]).x_end
+   mov      edx, (PolySurface PTR [eax]).xend
    cmp      ecx, edx
    jge      @@transListProcessed
-   mov      edi, (PolySurface PTR [ebx]).x_end
+   mov      edi, (PolySurface PTR [ebx]).xend
    mov      esi, (PolySurface PTR [eax]).xstart
    cmp      edi, esi
    jg       @@transPolyOverlapped
-   ; emit(transPoly>xstart, transPoly->x_end, transPoly->myPoly)
+   ; emit(transPoly>xstart, transPoly->xend, transPoly->myPoly)
    mov      edx, (PolySurface PTR [ebx]).myPoly
    mov      ebx, (PolySurface PTR [ebx]).nextPoly
    call     @emitSpan
@@ -1393,12 +1391,12 @@ gfx_scan_edges_z PROC C,
    fadd     st, st(2)
    ; tp->w  cp->w    tp->curW cp->curW tp->dw   cp->dw   curY
 
-   ; transPoly->x_end-1 in edi
-   ; curPoly->x_end-1 in edx
+   ; transPoly->xend-1 in edi
+   ; curPoly->xend-1 in edx
    cmp      edx, edi
-   jle      @@transx_endDone
+   jle      @@transXEndDone
    mov      edx, edi
-@@transx_endDone:
+@@transXEndDone:
    mov      saveX, edx
    fsubrp   st(1), st
 
@@ -1447,9 +1445,9 @@ gfx_scan_edges_z PROC C,
    mov      ecx, (PolySurface PTR [ebx]).xstart
    mov      edi, (PolySurface PTR [eax]).xstart
    call     @emitSpan
-   mov      ecx, (PolySurface PTR [eax]).x_end
+   mov      ecx, (PolySurface PTR [eax]).xend
    mov      edi, ebx
-   mov      edx, (PolySurface PTR [ebx]).x_end
+   mov      edx, (PolySurface PTR [ebx]).xend
    mov      ebx, (PolySurface PTR [ebx]).nextPoly
 
    cmp      ecx, edx
@@ -1518,8 +1516,8 @@ gfx_scan_edges_z PROC C,
 
 @@transPolyIntersectBehind:
    mov      edx, clipIndex
-   mov      edi, (PolySurface PTR [ebx]).x_end
-   mov      esi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [ebx]).xend
+   mov      esi, (PolySurface PTR [eax]).xend
    mov      ebp, edx
    cmp      edi, esi
    jle      @@transNoExtraSpan
@@ -1533,12 +1531,12 @@ gfx_scan_edges_z PROC C,
    ; agi DOH
 
    mov      (PolySurface PTR [ebp]).xstart, esi
-   mov      (PolySurface PTR [ebp]).x_end, edi
+   mov      (PolySurface PTR [ebp]).xend, edi
    mov      (PolySurface PTR [ebp]).myPoly, ecx
    mov      edi, ebp
    call     @insertReverse
 @@transNoExtraSpan:
-   fistp    (PolySurface PTR [ebx]).x_end
+   fistp    (PolySurface PTR [ebx]).xend
    mov      edi, ebx
    mov      ebx, (PolySurface PTR [ebx]).nextPoly
    call     @insertReverse      
@@ -1603,7 +1601,7 @@ gfx_scan_edges_z PROC C,
    mov      ebx, (PolySurface PTR [eax]).nextPoly
    cmp      ebx, 0
    je       @@emitLastSpansAndLoop
-   mov      edi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [eax]).xend
    mov      ecx, (PolySurface PTR [ebx]).xstart
    cmp      ecx, edi
    jl       @@spansOverlapInX
@@ -1626,7 +1624,7 @@ gfx_scan_edges_z PROC C,
    jnz      @@curPolyTotallyInFront
 
    fild     (PolySurface PTR [ebx]).xstart
-   mov      esi, (PolySurface PTR [ebx]).x_end
+   mov      esi, (PolySurface PTR [ebx]).xend
    cmp      esi, edi
    jl       @@minCalced
    mov      esi, edi
@@ -1646,14 +1644,14 @@ gfx_scan_edges_z PROC C,
    fadd     (PolySurface PTR [edx]).curW
    fxch     st(1)
 
-   ; st = x_end nextPolyWStart curPolyWStart y
+   ; st = XEnd nextPolyWStart curPolyWStart y
    fld      st
-   ; st = x_end x_end nextPolyWStart curPolyWStart y
+   ; st = XEnd XEnd nextPolyWStart curPolyWStart y
    fmul     (PolySurface PTR [ecx]).dwdx
-   ; st = curXE x_end nextPolyWStart curPolyWStart y
+   ; st = curXE XEnd nextPolyWStart curPolyWStart y
    fxch     st(2)
    fsubrp   st(3), st
-   ; st = x_end curXE startStatus y
+   ; st = XEnd curXE startStatus y
    fmul     (PolySurface PTR [edx]).dwdx
    fxch     st(1)
    fadd     (PolySurface PTR [ecx]).curW
@@ -1680,9 +1678,9 @@ gfx_scan_edges_z PROC C,
    jnz      @@testCurPolyBehind
 @@curPolyTotallyInFront:
    ; curPoly is totally in front
-   mov      ecx, (PolySurface PTR [eax]).x_end
+   mov      ecx, (PolySurface PTR [eax]).xend
    mov      edi, (PolySurface PTR [ebx]).nextPoly
-   mov      edx, (PolySurface PTR [ebx]).x_end
+   mov      edx, (PolySurface PTR [ebx]).xend
    mov      (PolySurface PTR [eax]).nextPoly, edi
    cmp      ecx, edx
    jge      @@skipTransClip
@@ -1701,9 +1699,9 @@ gfx_scan_edges_z PROC C,
    mov      ecx, (PolySurface PTR [eax]).xstart
    mov      edi, (PolySurface PTR [ebx]).xstart
    call     @emitSpan
-   mov      edi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [eax]).xend
    mov      ecx, ebx
-   mov      esi, (PolySurface PTR [ebx]).x_end
+   mov      esi, (PolySurface PTR [ebx]).xend
    mov      edx, eax
    mov      eax, ebx
    mov      ebx, transPolyList
@@ -1720,9 +1718,9 @@ gfx_scan_edges_z PROC C,
    fsub     (PolySurface PTR [ecx]).curW
    fld      (PolySurface PTR [ecx]).dwdx
    fsub     (PolySurface PTR [edx]).dwdx
-   mov      edx, (PolySurface PTR [eax]).x_end
+   mov      edx, (PolySurface PTR [eax]).xend
    mov      ebp, clipIndex
-   mov      edi, (PolySurface PTR [ebx]).x_end
+   mov      edi, (PolySurface PTR [ebx]).xend
    fdivp    st(1), st
 
    test     esi, 080000000h
@@ -1736,15 +1734,15 @@ gfx_scan_edges_z PROC C,
    lea      esi, [ClipSurfaces + esi*2]
    mov      clipIndex, ebp
    mov      (PolySurface PTR [esi]).xstart, edi
-   mov      (PolySurface PTR [esi]).x_end, edx
+   mov      (PolySurface PTR [esi]).xend, edx
    mov      (PolySurface PTR [esi]).myPoly, ecx
    mov      ecx, eax
    mov      edx, esi
    call     @resort
 @@positiveNoExtraSpan:
-   fistp    (PolySurface PTR [eax]).x_end
+   fistp    (PolySurface PTR [eax]).xend
    mov      esi, (PolySurface PTR [ebx]).nextPoly
-   mov      edi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [eax]).xend
    mov      (PolySurface PTR [eax]).nextPoly, esi
    mov      (PolySurface PTR [ebx]).xstart, edi
    mov      ecx, eax
@@ -1763,7 +1761,7 @@ gfx_scan_edges_z PROC C,
    mov      clipIndex, ebp
    mov      ecx, (PolySurface PTR [ebx]).myPoly
    mov      (PolySurface PTR [esi]).xstart, edx
-   mov      (PolySurface PTR [esi]).x_end, edi
+   mov      (PolySurface PTR [esi]).xend, edi
    mov      (PolySurface PTR [esi]).myPoly, ecx
    mov      edx, esi
    mov      ecx, ebx
@@ -1777,7 +1775,7 @@ gfx_scan_edges_z PROC C,
    mov      edx, eax
    mov      edi, (PolySurface PTR [eax]).xstart
    mov      eax, ebx
-   mov      (PolySurface PTR [ebx]).x_end, edi
+   mov      (PolySurface PTR [ebx]).xend, edi
    mov      ecx, ebx
    mov      ebx, transPolyList
    push     OFFSET @@testTransPolyList
@@ -1786,7 +1784,7 @@ gfx_scan_edges_z PROC C,
    cmp      eax, 0
    je       @@transEndLoopTest
    mov      ecx, (PolySurface PTR [eax]).xstart
-   mov      edi, (PolySurface PTR [eax]).x_end
+   mov      edi, (PolySurface PTR [eax]).xend
    mov      edx, (PolySurface PTR [eax]).myPoly
    call     @emitSpan
 @@transEndLoopTest:
@@ -1795,7 +1793,7 @@ gfx_scan_edges_z PROC C,
    je       @@scanlineDone
 @@transEmitLoop:
    mov      ecx, (PolySurface PTR [ebx]).xstart
-   mov      edi, (PolySurface PTR [ebx]).x_end
+   mov      edi, (PolySurface PTR [ebx]).xend
    mov      edx, (PolySurface PTR [ebx]).myPoly
    mov      ebx, (PolySurface PTR [ebx]).nextPoly
    call     @emitSpan

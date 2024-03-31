@@ -165,8 +165,6 @@ FontEditMainWindow::FontEditMainWindow(char *cmdLine)
 	refreshPreviewMenu();
 	update();
 	newFont();
-	// Altimor: Temporary because the menus don't work
-	openFont();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -258,7 +256,7 @@ void CopyBits(GFXBitmap *pDstBM,
    for ( int y=r->upperL.y; y<=r->lowerR.y; y++, dstY++ )
    {
       pSrcBits = (pSrcOrgBits + y*srcStride + r->upperL.x);
-      pDstBits = (char*)(pDstBM->pBits + dstY*pDstBM->getStride());
+      pDstBits = (pDstBM->pBits + dstY*pDstBM->getStride());
 
       for (int i=0; i<(r->lowerR.x - r->upperL.x + 1); i++ )
          if ( *pSrcBits != backColor )
@@ -305,13 +303,12 @@ void FontEditMainWindow::newWindowsFont()
 	COLORREF backgroundColorRef = RGB(  0,   0,   0);
 	COLORREF foregroundColorRef = RGB(255, 255, 255);
 	
-	// Altimor: these methods don't exist anymore
-	//pSurface->lockDC();
+	pSurface->lockDC();
 	SelectObject(pSurface->getDC(), hFont);
 	SetBkColor(pSurface->getDC(), backgroundColorRef);
 	SetTextColor(pSurface->getDC(), foregroundColorRef);
 	GetTextMetrics(pSurface->getDC(), &textMetric);
-	//pSurface->unlockDC();
+	pSurface->unlockDC();
 
 	Point2I center = editWindow->getClientSize();
 	RectI   clip;
@@ -324,7 +321,7 @@ void FontEditMainWindow::newWindowsFont()
 
 		pSurface->lock();
 		pSurface->clear(0);
-		//pSurface->lockDC();
+		pSurface->lockDC();
 
 		TextOut(pSurface->getDC(), center.x, center.y, buffer, 3);
 
@@ -336,9 +333,9 @@ void FontEditMainWindow::newWindowsFont()
 		bitmap = GFXBitmap::create(size.cx, size.cy);
 		bitmap->attribute |= BMA_TRANSPARENT;
 		RectI r(0, 0, size.cx - 1, size.cy - 1);
-		CopyBits(bitmap, (char*)pSurface->getAddress(center.x, center.y), pSurface->getStride(), &r, 0, 255);		
+		CopyBits(bitmap, pSurface->getAddress(center.x, center.y), pSurface->getStride(), &r, 0, 255);		
 		pSurface->unlock();
-		//pSurface->unlockDC();
+		pSurface->unlockDC();
 		pSurface->easyFlip();
 
 		// now clip the raw bitmap so we don't waste any space
@@ -375,7 +372,7 @@ void FontEditMainWindow::newWindowsFont()
 		RectI cutRect(0, 0, clip.lowerR.x - clip.upperL.x, clip.lowerR.y - clip.upperL.y);
 		clippedBitmap = GFXBitmap::create(1 + cutRect.lowerR.x, 1 + cutRect.lowerR.y);
 		CopyBits(clippedBitmap, 
-				(char*)bitmap->getAddress(clip.upperL.x, clip.upperL.y),
+				bitmap->getAddress(clip.upperL.x, clip.upperL.y),
 				bitmap->getStride(), &cutRect, 0, 255);
 		clippedBitmap->attribute = bitmap->attribute;
 		newBaseline = textMetric.tmDescent - ((bitmap->height - 1) - clip.lowerR.y);

@@ -137,8 +137,7 @@ bool SimLight::onAdd()
 {
    if(loadShape() && isGhost())
    {
-	   // Altimor: 3rd param used to be root
-      SimContainer * root = findObject(manager, SimRootContainerId, (SimContainer*)NULL);
+      SimContainer * root = findObject(manager, SimRootContainerId, root);
       root->addObject(this);
    }
    
@@ -225,8 +224,7 @@ bool SimLight::onSimEditEvent(const SimEditEvent * event)
       if(event->state)
       {
          editMode = true;
-	 // Altimor: 3rd param used to be root
-         SimContainer * root = findObject(manager, SimRootContainerId, (SimContainer*)NULL);
+         SimContainer * root = findObject(manager, SimRootContainerId, root);
          root->addObject(this);
       }
       else

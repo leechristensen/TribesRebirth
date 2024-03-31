@@ -1858,15 +1858,14 @@ void TerrainFile::render(TSRenderContext &rc)
    if(screenError >= 0.001)
       trs.pixelError = 1 / trs.camera->projectRadius(screenError, 1);
    else
-      trs.pixelError = 0.000001f;
+      trs.pixelError = 0.000001;
       
    TerrainRender::buildClippingPlanes();
    TerrainRender::buildLightArray();
    TerrainRender::buildDetailTable();
    
    
-   // Altimor: Unreferenced
-   //int p0, p1, p2, p3;
+   int p0, p1, p2, p3;
    
    int blockPoints[FileSize+1][FileSize+1];
    int horzEdges[FileSize+1][FileSize];
@@ -1896,8 +1895,7 @@ void TerrainFile::render(TSRenderContext &rc)
          vertEdges[i][j] = e;
       }
    }
-   // Altimor: Unreferenced
-   //int lastSquare[FileSize][FileSize];
+   int lastSquare[FileSize][FileSize];
    // process all blocks
    trs.currentBlock = blockMap[0][0];
    for(i = 0; i < FileSize; i++)
@@ -2059,7 +2057,7 @@ void TerrainRender::renderWater(TSRenderContext &rc, Point2F extent, Point2F tex
       return;
 
    trs.waterFreq = GetTickCount() / 1000.0f * M_2PI;
-   trs.waterScale = 0.05f * (float)M_PI;
+   trs.waterScale = 0.05 * M_PI;
    
    trs.waveCount = paramCount;
    for(int i= 0; i < paramCount; i++)
@@ -2087,7 +2085,7 @@ void TerrainRender::renderWater(TSRenderContext &rc, Point2F extent, Point2F tex
    if(screenError >= 0.001)
       trs.pixelError = 1 / trs.camera->projectRadius(screenError, 1);
    else
-      trs.pixelError = 0.000001f;
+      trs.pixelError = 0.000001;
    processWaterBlock(extent, height);
    transformWaterPoints();
 
