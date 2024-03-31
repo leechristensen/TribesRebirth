@@ -303,12 +303,12 @@ void FontEditMainWindow::newWindowsFont()
 	COLORREF backgroundColorRef = RGB(  0,   0,   0);
 	COLORREF foregroundColorRef = RGB(255, 255, 255);
 	
-	pSurface->lockDC();
+	pSurface->lock();
 	SelectObject(pSurface->getDC(), hFont);
 	SetBkColor(pSurface->getDC(), backgroundColorRef);
 	SetTextColor(pSurface->getDC(), foregroundColorRef);
 	GetTextMetrics(pSurface->getDC(), &textMetric);
-	pSurface->unlockDC();
+	pSurface->unlock();
 
 	Point2I center = editWindow->getClientSize();
 	RectI   clip;
@@ -321,7 +321,7 @@ void FontEditMainWindow::newWindowsFont()
 
 		pSurface->lock();
 		pSurface->clear(0);
-		pSurface->lockDC();
+		pSurface->lock();
 
 		TextOut(pSurface->getDC(), center.x, center.y, buffer, 3);
 
@@ -335,7 +335,7 @@ void FontEditMainWindow::newWindowsFont()
 		RectI r(0, 0, size.cx - 1, size.cy - 1);
 		CopyBits(bitmap, pSurface->getAddress(center.x, center.y), pSurface->getStride(), &r, 0, 255);		
 		pSurface->unlock();
-		pSurface->unlockDC();
+		pSurface->unlock();
 		pSurface->easyFlip();
 
 		// now clip the raw bitmap so we don't waste any space

@@ -160,9 +160,9 @@ void BitmapArrayCanvas::drawIndices()
 void BitmapArrayCanvas::unlock()
 {
   	GWCanvas::unlock();
-	getSurface()->lockDC();
+	getSurface()->lock();
 	drawIndices();
-	getSurface()->unlockDC();
+	getSurface()->unlock();
 }	
 
 ////////////////////////////////////////////////////////////////////////
