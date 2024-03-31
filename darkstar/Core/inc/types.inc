@@ -20,7 +20,8 @@ ARG equ
 DLL_EXPORT equ PUBLIC
 ELSE
 DLL_EXPORT equ PUBLICDLL
-EXTERNDEF       equ     GLOBAL
+; Commenting out for now - Might need a different version of TASM
+;EXTERNDEF       equ     GLOBAL
 ENDIF
 
 
