@@ -69,7 +69,7 @@ BayWatch.exe :                         \
    BW.obj
    %do %.exe
    %if %defined(PHOENIXDATA)
-      @xcopy /D $(PHOENIXDATA)\Editor.vol exe /R /Q > NUL
+      @xcopy /Y /D $(PHOENIXDATA)\Editor.vol exe /R /Q > NUL
    %else
       @echo ---------------------------- !Manually copy VolumeEdit.vol to EXE directory
    %endif
@@ -78,9 +78,9 @@ BayWatch.exe :                         \
 
 copy :
    %echo copying CommonLib files...
-   @-xcopy /D inc\*.h $(PHOENIXINC) /R /Q   > NUL
-   @-xcopy /D lib\*.lib $(PHOENIXLIB) /R /Q > NUL
-   @-xcopy /D $(OBJdest)\*.res $(PHOENIXLIB) /R /Q  > NUL
+   @-xcopy /Y /D inc\*.h $(PHOENIXINC) /R /Q   > NUL
+   @-xcopy /Y /D lib\*.lib $(PHOENIXLIB) /R /Q > NUL
+   @-xcopy /Y /D $(OBJdest)\*.res $(PHOENIXLIB) /R /Q  > NUL
    %if %defined(PHOENIXCODE)
-      @xcopy /D code\*.cpp $(PHOENIXCODE) /R /Q > NUL
+      @xcopy /Y /D code\*.cpp $(PHOENIXCODE) /R /Q > NUL
    %endif

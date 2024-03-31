@@ -48,8 +48,8 @@ $(LIBdest)\$(DEBUG)$(COMPILER)Common.lib:      \
 #------------------------------------------------------------------------------
 copy :
    %echo copying CommonLib files...
-   @xcopy /D inc\*.h $(PHOENIXINC) /R /Q   > NUL
+   @xcopy /Y /D inc\*.h $(PHOENIXINC) /R /Q   > NUL
    %if %defined(PHOENIXCODE)
-      @xcopy /D code\*.cpp $(PHOENIXCODE) /R /Q > NUL
+      @xcopy /Y /D code\*.cpp $(PHOENIXCODE) /R /Q > NUL
    %endif
-   @--xcopy /D lib\*.lib $(PHOENIXLIB) /R /Q > NUL
+   @--xcopy /Y /D lib\*.lib $(PHOENIXLIB) /R /Q > NUL

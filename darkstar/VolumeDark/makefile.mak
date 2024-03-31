@@ -35,7 +35,7 @@ data\darkstar.strings.h .MAKE .MISER : data\darkstar.strings.cs
 copy :
    %echo copying VolumeDark files...
 	%if %defined(PHOENIXDATA)
-	   @xcopy /D exe\*.vol $(PHOENIXDATA) /R /Q  > NUL
-	   @xcopy /D data\*.cs $(PHOENIXDATA) /R /Q  > NUL
+	   @xcopy /Y /D exe\*.vol $(PHOENIXDATA) /R /Q  > NUL
+	   @xcopy /Y /D data\*.cs $(PHOENIXDATA) /R /Q  > NUL
 	%endif
-	@xcopy /D data\*.h $(PHOENIXINC) /R /Q  > NUL
+	@xcopy /Y /D data\*.h $(PHOENIXINC) /R /Q  > NUL

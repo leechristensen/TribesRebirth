@@ -50,7 +50,7 @@ mstrsvr.exe:                    \
    servlog.obj 
    %do %.exe CONSOLE=YES
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 testgame.exe:                    \
@@ -64,7 +64,7 @@ testgame.exe:                    \
    servlog.obj 
    %do %.exe CONSOLE=YES
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 testspy.exe:                    \
@@ -78,7 +78,7 @@ testspy.exe:                    \
    servlog.obj 
    %do %.exe CONSOLE=YES
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 parse.exe:                    \
@@ -88,5 +88,5 @@ parse.exe:                    \
    parse.obj
    %do %.exe CONSOLE=YES
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif

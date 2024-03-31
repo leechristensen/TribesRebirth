@@ -64,7 +64,7 @@ BOBJS = itrbuild.obj             \
 zedBuild.exe: $(BOBJS) $(BLIBS)
    %do %.exe CONSOLE=true
    %if %exist($(PhoenixTool))
-      @-xcopy /Q $(.TARGET) $(PhoenixTool)
+      @-xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
    
 
@@ -97,7 +97,7 @@ LOBJS = itrlight.obj             \
 zedLight.exe: $(LOBJS) $(LLIBS)
     %do %.exe CONSOLE=true
     %if %exist($(PhoenixTool))
-       @-xcopy /Q $(.TARGET) $(PhoenixTool)
+       @-xcopy /Y /Q $(.TARGET) $(PhoenixTool)
     %endif
 
 
@@ -120,7 +120,7 @@ SOBJS = zedSParse.obj            \
 zedShape.exe: $(SOBJS) $(SLIBS)
    %do %.exe CONSOLE=true
    %if %exist($(PhoenixTool))
-      @-xcopy /Q $(.TARGET) $(PhoenixTool)
+      @-xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 ##############################################################################
@@ -128,13 +128,13 @@ zedShape.exe: $(SOBJS) $(SLIBS)
 #
 copy :
    %echo copying Interior files...
-   @xcopy /D inc\*.h $(PHOENIXINC)   /R /Q  > NUL
+   @xcopy /Y /D inc\*.h $(PHOENIXINC)   /R /Q  > NUL
    %if %defined(PHOENIXCODE)
-      @xcopy /D code $(PHOENIXCODE)  /R /Q  > NUL
+      @xcopy /Y /D code $(PHOENIXCODE)  /R /Q  > NUL
    %endif
-   @--xcopy /D lib\*.lib $(PHOENIXLIB) /R /Q  > NUL
+   @--xcopy /Y /D lib\*.lib $(PHOENIXLIB) /R /Q  > NUL
    %if "$(DEBUG)" && $(COMPILER) == "m"
       %echo copying Microsoft debug information ...
-      @xcopy /D *.pdb $(PHOENIXLIB) /R /Q > NUL
+      @xcopy /Y /D *.pdb $(PHOENIXLIB) /R /Q > NUL
    %endif
 

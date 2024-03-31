@@ -44,7 +44,7 @@ BaTool.exe:                      \
    batool.res
    %do %.exe
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 BaBuild.exe:                     \
@@ -57,6 +57,6 @@ BaBuild.exe:                     \
    babuild.obj                   
    %do %.exe console=true
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 

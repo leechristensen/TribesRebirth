@@ -123,26 +123,26 @@ $(LIBdest)\$(DEBUG)$(COMPILER)gfx.lib: $(GFX_OBJS)
 #
 copy :
    %echo copying DGfx files...
-   @xcopy /D inc\*.h       $(PHOENIXINC) /R /Q  > NUL
-   @xcopy /D glide\*.h     $(PHOENIXINC) /R /Q  > NUL
-   @--xcopy /D lib\*.dll     $(PHOENIXLIB) /R /Q  > NUL
+   @xcopy /Y /D inc\*.h       $(PHOENIXINC) /R /Q  > NUL
+   @xcopy /Y /D glide\*.h     $(PHOENIXINC) /R /Q  > NUL
+   @--xcopy /Y /D lib\*.dll     $(PHOENIXLIB) /R /Q  > NUL
    %if %defined(PHOENIXCODE)
-      @xcopy /D code $(PHOENIXCODE) /R /Q  > NUL
+      @xcopy /Y /D code $(PHOENIXCODE) /R /Q  > NUL
    %endif
-   @--xcopy /D lib\*.lib     $(PHOENIXLIB) /R /Q  > NUL
+   @--xcopy /Y /D lib\*.lib     $(PHOENIXLIB) /R /Q  > NUL
    %if $(COMPILER) == "b"
-      @--xcopy /D lib\*.tds     $(PHOENIXLIB) /R /Q  > NUL
+      @--xcopy /Y /D lib\*.tds     $(PHOENIXLIB) /R /Q  > NUL
    %endif
 # - Copy dll to project directory if necessary
    %if %defined(PROJECTEXE)
-      @xcopy /D lib\*.dll $(PROJECTEXE) /R /Q  > NUL
+      @xcopy /Y /D lib\*.dll $(PROJECTEXE) /R /Q  > NUL
    %endif
 # - Copy rendition uCode file to data directory...
 #   %if %defined(PHOENIXDATA)
-#      @xcopy /D Rendition\*.uc $(PHOENIXDATA) /R /Q  > NUL
+#      @xcopy /Y /D Rendition\*.uc $(PHOENIXDATA) /R /Q  > NUL
 #   %endif
    %if "$(DEBUG)" && $(COMPILER) == "m"
       %echo copying Microsoft debug information ...
-      @xcopy /D *.pdb $(PHOENIXLIB) /R /Q > NUL
+      @xcopy /Y /D *.pdb $(PHOENIXLIB) /R /Q > NUL
    %endif
 

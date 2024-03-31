@@ -1,18 +1,18 @@
-#°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
-#°°   
-#°° $Workfile:   makefile.mak  $
-#°° $Version$
-#°° $Revision:   1.10  $
-#°°   
-#°° DESCRIPTION:
-#°°   
-#°° (c) Copyright 1995, Dynamix Inc.   All rights reserved.
-#°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+#ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#ï¿½ï¿½   
+#ï¿½ï¿½ $Workfile:   makefile.mak  $
+#ï¿½ï¿½ $Version$
+#ï¿½ï¿½ $Revision:   1.10  $
+#ï¿½ï¿½   
+#ï¿½ï¿½ DESCRIPTION:
+#ï¿½ï¿½   
+#ï¿½ï¿½ (c) Copyright 1995, Dynamix Inc.   All rights reserved.
+#ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 PHOENIXMAKE ?= ..\makes
 %include <$(PHOENIXMAKE)\builtins.mak>
 
-#°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°° LIBRARIES
+#ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ LIBRARIES
 
 CORE_OBJS =             $(BASE_OBJS)        \
                         $(FILEIO_OBJS)      \
@@ -68,13 +68,13 @@ all:
 #------------------------------------------------------------------------------
 copy :
    %echo copying Core files ...
-   @xcopy /D inc $(PHOENIXINC) /R /Q /I > NUL
+   @xcopy /Y /D inc $(PHOENIXINC) /R /Q /I > NUL
    %if %defined(PHOENIXCODE)
-      @xcopy /D code  $(PHOENIXCODE) /R /Q /I > NUL
+      @xcopy /Y /D code  $(PHOENIXCODE) /R /Q /I > NUL
    %endif
-   @--xcopy /D lib\*.lib $(PHOENIXLIB) /R /Q /I > NUL
+   @--xcopy /Y /D lib\*.lib $(PHOENIXLIB) /R /Q /I > NUL
    %if "$(DEBUG)" && $(COMPILER) == "m"
       %echo copying Microsoft debug information ...
-      @xcopy /D *.pdb $(PHOENIXLIB) /R /Q > NUL
+      @xcopy /Y /D *.pdb $(PHOENIXLIB) /R /Q > NUL
    %endif
 

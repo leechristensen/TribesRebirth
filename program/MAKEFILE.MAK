@@ -263,8 +263,8 @@ all:                                \
 
 DarkstarData :
    %if %defined(PHOENIXDATA)
-      xcopy /D $(PHOENIXDATA)\*.vol exe\base        /R /Q
-      xcopy /D $(PHOENIXDATA)\*.cs exe\base\scripts /R /Q
+      xcopy /Y /D $(PHOENIXDATA)\*.vol exe\base        /R /Q
+      xcopy /Y /D $(PHOENIXDATA)\*.cs exe\base\scripts /R /Q
    %endif
 
 #
@@ -426,32 +426,32 @@ buildCopy: buildCopyExe buildCopyBase buildCopyVoices buildCopySkins \
 
 buildCopyExe: $(BUILD_FILES,<exe\)
 	%foreach SFILE in $(.SOURCES)
-		@xcopy /D $(SFILE) $(BUILDDIR)
+		@xcopy /Y /D $(SFILE) $(BUILDDIR)
 	%endfor
 
 buildCopyBase: $(BASE_FILES,<exe\base\)
 	%foreach SFILE in $(.SOURCES)
-		@xcopy /D $(SFILE) $(BUILDDIR)\base
+		@xcopy /Y /D $(SFILE) $(BUILDDIR)\base
 	%endfor
 
 buildCopyConfig: $(CONFIG_FILES,<exe\config\)
 	%foreach SFILE in $(.SOURCES)
-		@xcopy /D $(SFILE) $(BUILDDIR)\config
+		@xcopy /Y /D $(SFILE) $(BUILDDIR)\config
 	%endfor
 
 buildCopyVoices: $(VOICE_FILES,<exe\base\voices\)
 	%foreach SFILE in $(.SOURCES)
-		@xcopy /D $(SFILE) $(BUILDDIR)\base\voices
+		@xcopy /Y /D $(SFILE) $(BUILDDIR)\base\voices
 	%endfor
 
 buildCopySkins: $(SKIN_FILES,<exe\base\skins\)
 	%foreach SFILE in $(.SOURCES)
-		@xcopy /D $(SFILE) $(BUILDDIR)\base\skins
+		@xcopy /Y /D $(SFILE) $(BUILDDIR)\base\skins
 	%endfor
 
 buildCopyMissions: $(MISSION_FILES,<exe\base\missions\)
 	%foreach SFILE in $(.SOURCES)
-		@xcopy /D $(SFILE) $(BUILDDIR)\base\missions
+		@xcopy /Y /D $(SFILE) $(BUILDDIR)\base\missions
 	%endfor
 
 #

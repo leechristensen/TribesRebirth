@@ -11,4 +11,4 @@ PHOENIXMAKE ?= ..\makes
 #------------------------------------------------------------------------------
 copy :
    %echo copying DirectX headers...
-   @xcopy /D inc\*.h $(PHOENIXINC) /R /Q  > NUL
+   @xcopy /Y /D inc\*.h $(PHOENIXINC) /R /Q  > NUL

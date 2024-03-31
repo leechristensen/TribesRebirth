@@ -12,5 +12,5 @@ inc\esf.strings.h .MAKE .MISER : data\esf.strings.cs
 #------------------------------------------------------------------------------
 copy :
    %echo copying Common Volume files...
-   @xcopy /D data\*.cs $(PHOENIXDATA) /R /Q  > NUL
+   @xcopy /Y /D data\*.cs $(PHOENIXDATA) /R /Q  > NUL
    @copy inc\esf.strings.h $(PHOENIXINC)

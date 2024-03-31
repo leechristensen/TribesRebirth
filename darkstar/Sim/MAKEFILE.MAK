@@ -81,12 +81,12 @@ $(BuildPrefix)sim.pch:      \
 #------------------------------------------------------------------------------
 copy :
    %echo copying Sim files...
-   @xcopy /D inc\*.h $(PHOENIXINC) /R /Q  > NUL
-   @--xcopy /D lib\*.lib $(PHOENIXLIB) /R /Q  > NUL
+   @xcopy /Y /D inc\*.h $(PHOENIXINC) /R /Q  > NUL
+   @--xcopy /Y /D lib\*.lib $(PHOENIXLIB) /R /Q  > NUL
    %if %defined(PHOENIXCODE)
-      @xcopy /D code\*.cpp $(PHOENIXCODE) /R /Q  > NUL
+      @xcopy /Y /D code\*.cpp $(PHOENIXCODE) /R /Q  > NUL
    %endif
    %if "$(DEBUG)" && $(COMPILER) == "m"
       %echo copying Microsoft debug information ...
-      @xcopy /D *.pdb $(PHOENIXLIB) /R /Q > NUL
+      @xcopy /Y /D *.pdb $(PHOENIXLIB) /R /Q > NUL
    %endif

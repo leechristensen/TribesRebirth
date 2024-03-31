@@ -41,11 +41,11 @@ tag2bin.exe:                     	\
    tag2bin.obj                 
    %do %.exe console=true
    %if %exist($(PhoenixTool))
-      @xcopy /D /R /Q /I $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /D /R /Q /I $(.TARGET) $(PhoenixTool)
    %endif
 
 copy:
    %if %defined(PHOENIXTOOL)
-      xcopy /D exe\tag2bin.exe $(PHOENIXTOOL) /R /Q /I
+      xcopy /Y /D exe\tag2bin.exe $(PHOENIXTOOL) /R /Q /I
    %endif
 

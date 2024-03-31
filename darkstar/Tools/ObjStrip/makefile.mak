@@ -40,5 +40,5 @@ ObjStrip.exe :                   \
    ObjStrip.obj
    %do %.exe CONSOLE=yes
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif

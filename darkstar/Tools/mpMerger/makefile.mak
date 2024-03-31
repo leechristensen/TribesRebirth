@@ -52,5 +52,5 @@ mpMerger.exe:					\
    vector.obj
    %do %.exe CONSOLE=YES
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif

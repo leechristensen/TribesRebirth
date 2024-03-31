@@ -52,13 +52,13 @@ LSTest.exe :                        \
 
 copy :
    %echo copying Landscape files...
-   @xcopy /D inc\*.h   $(PHOENIXINC) /R /Q  > NUL
+   @xcopy /Y /D inc\*.h   $(PHOENIXINC) /R /Q  > NUL
    %if %defined(PHOENIXCODE)
-      @xcopy /D code\*.cpp $(PHOENIXCODE) /R /Q  > NUL
+      @xcopy /Y /D code\*.cpp $(PHOENIXCODE) /R /Q  > NUL
    %endif
-   @--xcopy /D lib\*.lib $(PHOENIXLIB) /R /Q  > NUL
-   @--xcopy /D $(OBJdest)\*.res $(PHOENIXLIB) /R /Q  > NUL
+   @--xcopy /Y /D lib\*.lib $(PHOENIXLIB) /R /Q  > NUL
+   @--xcopy /Y /D $(OBJdest)\*.res $(PHOENIXLIB) /R /Q  > NUL
    %if "$(DEBUG)" && $(COMPILER) == "m"
       %echo copying Microsoft debug information ...
-      @xcopy /D *.pdb $(PHOENIXLIB) /R /Q > NUL
+      @xcopy /Y /D *.pdb $(PHOENIXLIB) /R /Q > NUL
    %endif

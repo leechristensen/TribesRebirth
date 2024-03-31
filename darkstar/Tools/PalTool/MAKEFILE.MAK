@@ -49,7 +49,7 @@ PalTool.exe:                           \
    paltool.res
    %do %.exe
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 ##--------------------------------------
@@ -67,7 +67,7 @@ PalTool.exe:                           \
 #   luvConv.obj                         
 #   %do %.exe CONSOLE=YES
 #   %if %exist($(PhoenixTool))
-#      @xcopy /Q $(.TARGET) $(PhoenixTool)
+#      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
 #   %endif
 
 #--------------------------------------

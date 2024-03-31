@@ -39,7 +39,7 @@ StampTool.exe:                         \
 
    %do %.exe
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
-      @xcopy /Q exe\StampTool.hlp $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q exe\StampTool.hlp $(PhoenixTool)
    %endif
 

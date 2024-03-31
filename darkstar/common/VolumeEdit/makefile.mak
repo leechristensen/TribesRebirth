@@ -36,6 +36,6 @@ inc\commonEditor.strings.h .MAKE .MISER : data\commonEditor.strings.cs
 #------------------------------------------------------------------------------
 copy :
    %echo copying Common Edit files...
-   @xcopy /D data\*.cs $(PHOENIXDATA) /R /Q  > NUL
+   @xcopy /Y /D data\*.cs $(PHOENIXDATA) /R /Q  > NUL
    @copy inc\*.h $(PHOENIXINC) > NUL
    

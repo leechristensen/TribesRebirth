@@ -63,13 +63,13 @@ main.strings.h  .MAKE .MISER : main.strings.ttag
 #------------------------------------------------------------------------------
 copyPhoenixDat:
    %if %defined(PHOENIXDATA)
-      xcopy /D $(PHOENIXDATA)\*.cs   exe /R /Q
-      xcopy /D $(PHOENIXDATA)\*.vol  exe /R /Q
+      xcopy /Y /D $(PHOENIXDATA)\*.cs   exe /R /Q
+      xcopy /Y /D $(PHOENIXDATA)\*.vol  exe /R /Q
    %endif
  
 copyRenditionUC:
    %if %defined(PHOENIXDATA)
-      xcopy /D $(PHOENIXDATA)\*.uc exe /R /Q
+      xcopy /Y /D $(PHOENIXDATA)\*.uc exe /R /Q
    %endif
 
 

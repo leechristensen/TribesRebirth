@@ -40,7 +40,7 @@ Alpha.exe:                       \
    alpha.obj
    %do %.exe CONSOLE=yes
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 #==============================================================================
@@ -52,6 +52,6 @@ Alpha.exe:                       \
 #   bitview.obj                   \
 #   bitview.res
 #   %if %exist($(PhoenixTool))
-#      @xcopy /Q $(.TARGET) $(PhoenixTool)
+#      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
 #   %endif
       

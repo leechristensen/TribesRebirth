@@ -41,7 +41,7 @@ TexTable.exe:                    \
    TexTable.obj                    
    %do %.exe CONSOLE=yes
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 #   %do %.exe PRECOMPILED_HEADER=esCore.cpp

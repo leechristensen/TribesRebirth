@@ -40,7 +40,7 @@ MipMake.exe:                     \
    mipmake.obj                   
    %do %.exe console=true
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 #==============================================================================
@@ -59,7 +59,7 @@ MipView.exe:                     \
    mipview.res
    %do %.exe 
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 #==============================================================================
@@ -73,6 +73,6 @@ BMPInfo.exe:                     \
    bmpinfo.obj                   
    %do %.exe console=true
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 

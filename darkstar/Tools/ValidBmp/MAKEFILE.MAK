@@ -17,6 +17,6 @@ OBJS = ValidBmp.obj             \
 ValidBmp.exe: $(OBJS) $(LIBS)
    %do %.exe CONSOLE=true
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 

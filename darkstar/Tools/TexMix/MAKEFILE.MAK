@@ -40,6 +40,6 @@ TexMix.exe:                         \
    TexMix.obj                    
    %do %.exe CONSOLE=yes
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 

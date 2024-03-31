@@ -41,7 +41,7 @@ VT.exe : \
    @%set CC_FLAGS = -DM_BACK
    %do %.exe console=true
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 #==============================================================================
@@ -57,7 +57,7 @@ VInfo.exe : \
    @%set CC_FLAGS = -DM_BACK
    %do %.exe console=true
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 #==============================================================================
@@ -73,7 +73,7 @@ Extract.exe : \
    @%set CC_FLAGS = -DM_BACK
    %do %.exe console=true      
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 #==============================================================================
@@ -89,7 +89,7 @@ VTList.exe : \
    @%set CC_FLAGS = -DM_BACK
    %do %.exe console=true
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
 
 #==============================================================================
@@ -105,5 +105,5 @@ VMerge.exe : \
    @%set CC_FLAGS = -DM_BACK
    %do %.exe console=true
    %if %exist($(PhoenixTool))
-      @xcopy /Q $(.TARGET) $(PhoenixTool)
+      @xcopy /Y /Q $(.TARGET) $(PhoenixTool)
    %endif
