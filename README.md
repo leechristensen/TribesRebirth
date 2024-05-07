@@ -88,3 +88,5 @@ make
 - [ ] Get the `program` folder building
   - [ ] Add missing header files
   - [ ] Obtain missing game assets (fonts.vol, scripts.vol, gui.vol, prefab.vol) and store them under exe\base\fonts\, exe\base\scripts\, exe\base\gui\, and exe\base\prefabs\.
+
+- [ ] Investigate making Borland/TASM work under Wine so we can build with Linux containers instead.
