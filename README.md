@@ -10,13 +10,14 @@ docker run --rm -ti -v C:\code\TribesRebirth\:C:\code tribes-build-image cmd.exe
 
 2. Setup the build environment:
 ```
-set OPT=0
+set OPT=1
 set COMPILER=b
 set PHOENIXMAKE=C:\code\darkstar\makes\
 set PATH=%PATH%;C:\code\darkstar\Toolbin
+set TASM=C:\TASM\BIN\
 ```
 Environment variable explanations:
-- `OPT` controls whether to do a Debug or Release (optimized) build (`0` or `1`)
+- `OPT` controls whether to do a Debug or Release (optimized) build (`0` or `1`, respectively)
 - `COMPILER` sets the compiler (`b`=Borland)
 - `PHOENIXMAKE` path to some make files that part of the build relies on
 - The `PATH` is modified since a part of the build requires `tag2bin.exe`
